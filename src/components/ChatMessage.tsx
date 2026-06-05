@@ -55,9 +55,9 @@ export function ChatMessage({ message, onRelatedSelect }: ChatMessageProps) {
             <div className="w-full pt-6 pb-2 px-4 md:px-0">
                 <div className="max-w-3xl mx-auto flex justify-end">
                     <div className="max-w-[80%] bg-primary text-primary-foreground px-4 py-3 rounded-md shadow-sm">
-                        <p className="text-sm md:text-base leading-relaxed">
+                        <div className="text-sm md:text-base leading-relaxed whitespace-pre-wrap">
                             {message.content}
-                        </p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -96,7 +96,7 @@ export function ChatMessage({ message, onRelatedSelect }: ChatMessageProps) {
                                             </a>
                                         ),
                                         p: ({ children }) => (
-                                            <p className="mb-4 last:mb-0">{children}</p>
+                                            <div className="mb-4 last:mb-0">{children}</div>
                                         ),
                                         ul: ({ children }) => (
                                             <ul className="list-disc pl-5 mb-4 space-y-1">{children}</ul>

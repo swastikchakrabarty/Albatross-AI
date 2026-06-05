@@ -14,26 +14,16 @@ export interface SearchResponse {
     error?: string;
 }
 
-const SERPAPI_KEY = import.meta.env.VITE_SERPAPI_KEY;
-
 export async function searchWeb(query: string): Promise<SearchResponse> {
-    if (!SERPAPI_KEY) {
-        console.warn('VITE_SERPAPI_KEY is missing');
-        return { results: [], error: 'Configuration missing' };
-    }
-
     try {
-        const params = new URLSearchParams({
-            engine: 'google',
-            q: query,
-            api_key: SERPAPI_KEY,
-            num: '8', // Top 8 results for context
+        const response = await fetch('/api/search', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ query })
         });
 
-        const response = await fetch(`https://serpapi.com/search.json?${params.toString()}`);
-
         if (!response.ok) {
-            throw new Error(`SerpAPI error: ${response.statusText}`);
+            throw new Error(`Search API error: ${response.statusText}`);
         }
 
         const data = await response.json();

@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { useChatStore } from '@/lib/store';
-import { ai, type Message } from '@/lib/openai';
+import { ai, expandSearchQuery, type Message } from '@/lib/openai';
 import { searchWeb } from '@/lib/search';
 
 export function useChat() {
@@ -48,7 +48,9 @@ export function useChat() {
             let sources: any[] = [];
 
             try {
-                const searchResponse = await searchWeb(content.trim());
+                const optimizedQuery = await expandSearchQuery(content.trim());
+                console.log(`Original Query: "${content.trim()}" -> Optimized: "${optimizedQuery}"`);
+                const searchResponse = await searchWeb(optimizedQuery);
                 if (searchResponse.results.length > 0) {
                     sources = searchResponse.results;
                     searchContext = `
