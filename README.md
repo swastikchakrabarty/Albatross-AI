@@ -61,3 +61,27 @@ graph TD
         UI -->|Asynchronous Deserialization| Store[Zustand Store]
         Store -->|Cache Layer Sync| Storage[Local Storage Engines]
     end
+## Technology Choice Matrix
+
+### React 19 & Vite
+Vite delivers near-instantaneous **Hot Module Replacement (HMR)** to preserve design workflows, allowing me to isolate layout updates away from the heavier background networking loops.
+
+### TypeScript
+Strict interfaces govern data contracts across the application. Explicit types for `Message`, `Source`, and `Conversation` guarantee that data streams coming out of the search engine match up perfectly with the context processing layers before reaching the component renderer.
+
+### Tailwind CSS & Glassmorphism
+The utility-first structure allows for rapid adjustments to design variables, making it straightforward to implement custom color configurations (`#0A0A0A`) and smooth backdrop blur filters without generating messy or redundant CSS files.
+
+### Zustand
+Zustand provides a clean, hook-based global state solution without the excessive boilerplate of Redux. It easily connects streaming text updates with local data caching layers.
+
+---
+
+## Why This Architecture Matters
+
+This platform isn't just a basic interface built from a tutorial; it is a direct showcase of what happens when you combine careful frontend system architecture with premium layout design:
+
+* **RAG Pipeline Design:** Built a highly responsive client-side retrieval framework that handles complex, multi-step asynchronous processes (Query $\rightarrow$ Search $\rightarrow$ Context Build $\rightarrow$ LLM Stream) reliably.
+* **Deep System Focus:** Designed for developers who value understanding how systems work under the hood. The codebase emphasizes clean layout patterns, optimized component rendering, and explicit data boundaries.
+* **Meticulous Attention to Detail:** Every part of the UI has been carefully adjusted—from the custom virtualized scrollbars and exact font letter-spacing tracking, down to the tailored SVG logo elements.
+
