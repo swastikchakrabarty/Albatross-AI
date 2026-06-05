@@ -63,23 +63,3 @@ graph TD
     end
 
 
-## Technical Architecture
-
-The systemic data lifecycle runs as a client-coordinated pipeline across three modular domains:
-
-```mermaid
-graph TD
-    User[User Input Console] -->|1. Submit Query| Hook[useChat Hook Orchestrator]
-    
-    subgraph "RAG Context Pipeline"
-        Hook -->|2. Parallel Web Fetch| Search[SerpAPI Execution Layer]
-        Search -->|3. Raw Snippet Arrays| Hook
-        Hook -->|4. Strict System Prompt Assembly| Prompt[Context Compiler]
-        Prompt -->|5. Context + Message History| LLM[GLM-4.7-Flash LLM]
-    end
-    
-    subgraph "State Tracking & Component Layout"
-        LLM -->|6. Token Stream| UI[Glassmorphic Interface View]
-        UI -->|Asynchronous Deserialization| Store[Zustand Store]
-        Store -->|Cache Layer Sync| Storage[Local Storage Engines]
-    end
