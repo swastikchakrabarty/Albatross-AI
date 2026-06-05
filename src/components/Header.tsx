@@ -1,8 +1,8 @@
 import { FiMenu, FiMoon, FiSun, FiSidebar } from 'react-icons/fi';
-import { UserButton } from '@clerk/clerk-react';
 import { Button } from './ui/button';
 import { useTheme } from './theme-provider';
 import { PerplexityLogo } from './PerplexityLogo';
+import { UserMenu } from './UserMenu';
 
 interface HeaderProps {
     onMenuClick?: () => void;
@@ -61,8 +61,8 @@ export function Header({ onMenuClick, onDesktopToggle, isDesktopSidebarCollapsed
                             <FiMoon className="h-4 w-4 sm:h-5 sm:w-5" />
                         )}
                     </Button>
-                    <div className="scale-90 sm:scale-100">
-                        <UserButton afterSignOutUrl="/" />
+                    <div className="scale-90 sm:scale-100 flex items-center justify-center">
+                        <UserMenu />
                     </div>
                 </div>
             </div>

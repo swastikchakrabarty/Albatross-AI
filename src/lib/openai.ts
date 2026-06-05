@@ -1,6 +1,6 @@
-import OpenAI from 'openai';
+import { GoogleGenAI } from '@google/genai';
 
-const ZAI_API_KEY = import.meta.env.VITE_ZAI_API_KEY;
+const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
 
 export interface Source {
     title: string;
@@ -16,22 +16,6 @@ export interface Message {
     sources?: Source[];
 }
 
-const client = new OpenAI({
-    apiKey: ZAI_API_KEY,
-    baseURL: 'https://api.z.ai/api/paas/v4/',
-    dangerouslyAllowBrowser: true, // Required for frontend usage
+export const ai = new GoogleGenAI({ 
+    apiKey: GEMINI_API_KEY 
 });
-
-export async function sendChatMessage(messages: Message[]): Promise<string> {
-    try {
-        const completion = await client.chat.completions.create({
-            model: 'glm-4.7-flash',
-            messages: messages as OpenAI.Chat.ChatCompletionMessageParam[],
-        });
-
-        return completion.choices[0]?.message?.content || '';
-    } catch (error) {
-        console.error('Chat API Error:', error);
-        throw error;
-    }
-}

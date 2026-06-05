@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
-import { SignedIn, SignedOut, useUser } from '@clerk/clerk-react';
 import { ThemeProvider } from './components/theme-provider';
 import { Chat } from './pages/Chat';
 import { Auth } from './pages/Auth';
 import { Welcome } from './pages/Welcome';
 import { NotImplemented } from './pages/NotImplemented';
+import { useChatStore } from './lib/store';
 
 function App() {
   const [currentPath, setCurrentPath] = useState(window.location.hash);
-  const { isSignedIn } = useUser();
+  const { isAuthenticated } = useChatStore();
 
   useEffect(() => {
     const handleHashChange = () => {
@@ -21,10 +21,10 @@ function App() {
 
   // Redirect to welcome if signed in and on auth pages
   useEffect(() => {
-    if (isSignedIn && (currentPath === '#/signin' || currentPath === '#/signup')) {
+    if (isAuthenticated && (currentPath === '#/signin' || currentPath === '#/signup')) {
       window.location.hash = '#/welcome';
     }
-  }, [isSignedIn, currentPath]);
+  }, [isAuthenticated, currentPath]);
 
   // Handle routes
   if (currentPath === '#/not-implemented') {
@@ -38,12 +38,7 @@ function App() {
   if (currentPath === '#/chat') {
     return (
       <ThemeProvider>
-        <SignedIn>
-          <Chat />
-        </SignedIn>
-        <SignedOut>
-          <Auth />
-        </SignedOut>
+        {isAuthenticated ? <Chat /> : <Auth />}
       </ThemeProvider>
     );
   }
@@ -51,12 +46,7 @@ function App() {
   // Default to welcome page for signed-in users
   return (
     <ThemeProvider>
-      <SignedIn>
-        <Welcome />
-      </SignedIn>
-      <SignedOut>
-        <Auth />
-      </SignedOut>
+      {isAuthenticated ? <Welcome /> : <Auth />}
     </ThemeProvider>
   );
 }

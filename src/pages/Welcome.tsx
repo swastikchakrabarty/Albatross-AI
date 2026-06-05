@@ -1,10 +1,10 @@
 import { FiSearch, FiArrowRight, FiSun, FiMoon, FiZap, FiBookOpen, FiShield } from 'react-icons/fi';
-import { UserButton } from '@clerk/clerk-react';
 import { useChatStore } from '@/lib/store';
 import { useTheme } from '@/components/theme-provider';
 import { Button } from '@/components/ui/button';
 import { PerplexityLogo } from '@/components/PerplexityLogo';
 import { Footer } from '@/components/Footer';
+import { UserMenu } from '@/components/UserMenu';
 
 export function Welcome() {
     const { createConversation } = useChatStore();
@@ -34,8 +34,8 @@ export function Welcome() {
                             <FiMoon className="w-5 h-5" />
                         )}
                     </Button>
-                    <div className="scale-100">
-                        <UserButton afterSignOutUrl="/" />
+                    <div className="scale-100 flex items-center justify-center">
+                        <UserMenu />
                     </div>
                 </div>
             </header>
