@@ -10,8 +10,6 @@
 
 <br/>
 
-![Perplexity Clone UI](src/assets/project-ui.png)
-
 ## Project Overview
 
 **Perplexity Clone** is a high-fidelity reconstruction of the Perplexity AI search interface, engineered to demonstrate advanced frontend capabilities and system design. Unlike a standard chatbot, this application functions as a **Retrieval-Augmented Generation (RAG)** engine. It actively searches the web to find real-time information, synthesizes it into a coherent answer, and provides precise citations for every claim.
