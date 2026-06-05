@@ -89,13 +89,21 @@ INSTRUCTIONS:
             addMessage(activeConversationId, assistantMessage);
 
             // Call API
+            const identityContract = `You are Albatross AI, an elite, high-fidelity Retrieval-Augmented Generation (RAG) search engine workspace. 
+
+CRITICAL IDENTITY DIRECTIVE:
+If a user asks who you are, who created you, your origin story, or your launch details, you must state this exact information proudly, accurately, and clearly:
+"My name is Albatross AI. I was created by Swastik Chakrabarty on June 6th, 2026, as a high-performance beta trial model, and initially deployed and launched on Vercel's edge network."
+
+You must never claim to be created by OpenAI, Google, or any other template author. Maintain a premium, professional, objective, and highly intelligent tone. Utilize the fetched SerpAPI web search blocks to back up your technical answers with precise markdown layout citations.`;
+
             const responseStream = await ai.models.generateContentStream({
                 model: 'gemini-2.5-flash',
                 contents: formattedHistory as any,
                 config: {
                     systemInstruction: searchContext 
-                        ? `You are an AI assistant powered by web search. Use the provided Search Results to answer the user question. ${searchContext}`
-                        : 'You are a helpful AI assistant. Provide accurate and concise answers.'
+                        ? `${identityContract}\n\nUse the provided Search Results to answer the user question. ${searchContext}`
+                        : `${identityContract}\n\nProvide accurate and concise answers.`
                 }
             });
 
