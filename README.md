@@ -61,27 +61,25 @@ graph TD
         UI -->|Asynchronous Deserialization| Store[Zustand Store]
         Store -->|Cache Layer Sync| Storage[Local Storage Engines]
     end
-## Technology Choice Matrix
 
-### React 19 & Vite
-Vite delivers near-instantaneous **Hot Module Replacement (HMR)** to preserve design workflows, allowing me to isolate layout updates away from the heavier background networking loops.
 
-### TypeScript
-Strict interfaces govern data contracts across the application. Explicit types for `Message`, `Source`, and `Conversation` guarantee that data streams coming out of the search engine match up perfectly with the context processing layers before reaching the component renderer.
+## Technical Architecture
 
-### Tailwind CSS & Glassmorphism
-The utility-first structure allows for rapid adjustments to design variables, making it straightforward to implement custom color configurations (`#0A0A0A`) and smooth backdrop blur filters without generating messy or redundant CSS files.
+The systemic data lifecycle runs as a client-coordinated pipeline across three modular domains:
 
-### Zustand
-Zustand provides a clean, hook-based global state solution without the excessive boilerplate of Redux. It easily connects streaming text updates with local data caching layers.
-
----
-
-## Why This Architecture Matters
-
-This platform isn't just a basic interface built from a tutorial; it is a direct showcase of what happens when you combine careful frontend system architecture with premium layout design:
-
-* **RAG Pipeline Design:** Built a highly responsive client-side retrieval framework that handles complex, multi-step asynchronous processes (Query $\rightarrow$ Search $\rightarrow$ Context Build $\rightarrow$ LLM Stream) reliably.
-* **Deep System Focus:** Designed for developers who value understanding how systems work under the hood. The codebase emphasizes clean layout patterns, optimized component rendering, and explicit data boundaries.
-* **Meticulous Attention to Detail:** Every part of the UI has been carefully adjusted—from the custom virtualized scrollbars and exact font letter-spacing tracking, down to the tailored SVG logo elements.
-
+```mermaid
+graph TD
+    User[User Input Console] -->|1. Submit Query| Hook[useChat Hook Orchestrator]
+    
+    subgraph "RAG Context Pipeline"
+        Hook -->|2. Parallel Web Fetch| Search[SerpAPI Execution Layer]
+        Search -->|3. Raw Snippet Arrays| Hook
+        Hook -->|4. Strict System Prompt Assembly| Prompt[Context Compiler]
+        Prompt -->|5. Context + Message History| LLM[GLM-4.7-Flash LLM]
+    end
+    
+    subgraph "State Tracking & Component Layout"
+        LLM -->|6. Token Stream| UI[Glassmorphic Interface View]
+        UI -->|Asynchronous Deserialization| Store[Zustand Store]
+        Store -->|Cache Layer Sync| Storage[Local Storage Engines]
+    end
